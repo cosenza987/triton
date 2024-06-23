@@ -23,11 +23,16 @@ def add(x: torch.Tensor, y: torch.Tensor):
     return output
 
 def main():
-    a = torch.Tensor([3., 2., 4., 2., 1.])
+    f = open("in.txt", "r")
+    al = list(map(int, f.readline().split()))
+    bl = list(map(int, f.readline().split()))
+    f.close()
+    a = torch.Tensor(al)
     a = a.to(device=torch.device('cuda'))
-    b = torch.Tensor([4., 2., 1., 4., 0.])
+    b = torch.Tensor(bl)
     b = b.to(device=torch.device('cuda'))
-    print(add(a, b))
+    f = open("out.txt", "w")
+    f.write(str(add(a, b).tolist()))
 
 if __name__ == '__main__':
     main()
