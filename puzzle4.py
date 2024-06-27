@@ -27,12 +27,10 @@ def puzzle4(a: torch.Tensor, b: torch.Tensor):
     puzzle4_kernel[(rows, )](output, output.stride(0), a, b, cols, num_warps=num_warps, BLOCK_SIZE=block_size)
     return output
 
-
+# this works, however triton complains if I try to do everything at once...
 def main():
-    a = torch.Tensor([4, 5, 3, 2, 7])
-    a = a.to(device=torch.device('cuda'))
-    b = torch.Tensor([1, 7, 2, 6])
-    b = b.to(device=torch.device('cuda'))
+    a = torch.randn(5000, 1, device='cuda')
+    b = torch.randn(2048, 1, device='cuda')
     print(puzzle4(a, b))
 
 if __name__ == '__main__':
